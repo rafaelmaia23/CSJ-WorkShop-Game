@@ -55,15 +55,18 @@ public class Enemy : MonoBehaviour
 
         if (hit != null)
         {
-            health--;
-            anim.SetTrigger("hit");
-            hit.GetComponent<Rigidbody2D>().AddForce(Vector2.up * throwPlayerForce, ForceMode2D.Impulse);
+            if(hit.GetComponent<Player>().invencible == false)
+            {
+                health--;
+                anim.SetTrigger("hit");
+                hit.GetComponent<Rigidbody2D>().AddForce(Vector2.up * throwPlayerForce, ForceMode2D.Impulse);
+            }
         }
 
         //é chamado quando escosta no player de frente
         if (hitPlayer != null)
         {
-
+            hitPlayer.GetComponent<Player>().Damage();
         }
     }
 
@@ -80,7 +83,7 @@ public class Enemy : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //checa se está colidindo com algum obstáculo
-        if (collision.gameObject.layer == 9)
+        if (collision.gameObject.layer == 7)
         {
             isRight = !isRight;
         }
